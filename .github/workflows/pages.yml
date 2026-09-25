@@ -2,17 +2,18 @@ name: Inner Pathway website
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
 
 permissions:
   contents: read
 
+# Live and staging share one Pages artifact, so never let deployments race.
 concurrency:
-  group: inner-pathway-website-${{ github.ref }}
-  cancel-in-progress: true
+  group: inner-pathway-website-pages
+  cancel-in-progress: false
 
 jobs:
   validate:
@@ -27,7 +28,7 @@ jobs:
 
   deploy:
     name: Deploy GitHub Pages
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging')
     needs: validate
     runs-on: [self-hosted, Linux, X64, hamblett, normal-ci, github]
     permissions:
@@ -38,16 +39,32 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Check out source
+      - name: Check out live source
         uses: actions/checkout@v7
+        with:
+          ref: main
+          path: source-main
+
+      - name: Check out staging source
+        uses: actions/checkout@v7
+        with:
+          ref: staging
+          path: source-staging
+
+      - name: Build combined live and staging artifact
+        run: >-
+          python3 source-main/scripts/build-pages.py
+          --live source-main
+          --staging source-staging
+          --output _site
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
 
-      - name: Upload static site
+      - name: Upload combined static site
         uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          path: _site
 
       - name: Deploy
         id: deployment
