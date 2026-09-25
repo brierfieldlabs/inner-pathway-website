@@ -47,7 +47,7 @@ button, input, textarea, select { font: inherit; }
   display: inline-flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--ink);
 }
-.brand img { width: 56px; height: 56px; object-fit: contain; }
+.brand img { width: 68px; height: 68px; object-fit: contain; }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
@@ -174,7 +174,7 @@ h3 { font-size: 23px; }
 }
 .price-card div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .price-card span { font-weight: 700; }
-.price-card strong { font-size: 38px; font-family: "PT Serif", Georgia, serif; }
+.price-card strong { font-size: 30px; font-family: "PT Serif", Georgia, serif; }
 .price-card p { margin-bottom: 0; color: #ecdde2; }
 .qualification-grid {
   display: grid; grid-template-columns: 1fr 1.15fr .6fr;
@@ -261,7 +261,7 @@ h3 { font-size: 23px; }
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
   .header-inner { min-height: 72px; }
-  .brand img { width: 48px; height: 48px; }
+  .brand img { width: 58px; height: 58px; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
     display: none; position: absolute; top: 72px; left: 0; right: 0;
