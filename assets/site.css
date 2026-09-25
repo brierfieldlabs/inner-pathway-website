@@ -136,6 +136,7 @@ h3 { font-size: 23px; }
 .prose p { margin: 0 0 18px; font-size: 17px; }
 .cards { display: grid; gap: 22px; }
 .cards.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.cards.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .card {
   padding: 28px; background: #fff; border: 1px solid var(--line);
   border-radius: var(--radius); box-shadow: 0 10px 35px rgba(74,28,46,.06);
@@ -236,7 +237,7 @@ h3 { font-size: 23px; }
   .hero-card { max-width: 620px; }
   .fee-grid { grid-template-columns: 1fr 1fr; }
   .fee-grid > :first-child { grid-column: 1 / -1; }
-  .cards.three { grid-template-columns: 1fr 1fr; }
+  .cards.three, .cards.two { grid-template-columns: 1fr 1fr; }
   .qualification-grid .badge-panel { max-width: 270px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-meta { grid-column: 1 / -1; text-align: left; }
@@ -257,7 +258,7 @@ h3 { font-size: 23px; }
   .hero { padding: 64px 0 62px; }
   h1 { font-size: clamp(40px, 13vw, 58px); }
   .section { padding: 64px 0; }
-  .cards.three, .fee-grid { grid-template-columns: 1fr; }
+  .cards.three, .cards.two, .fee-grid { grid-template-columns: 1fr; }
   .fee-grid > :first-child { grid-column: auto; }
   .urgent-inner { align-items: flex-start; flex-direction: column; }
   .footer-grid { grid-template-columns: 1fr; }

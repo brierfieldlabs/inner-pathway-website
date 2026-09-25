@@ -70,7 +70,10 @@ index = (ROOT / "index.html").read_text(encoding="utf-8")
 for needle in [
     "Inner Pathway Counselling",
     "Certificate in Online and Telephone Counselling",
+    "A Therapeutic Focus on Risk When Working with Sexual Harm and its Consequences",
     "BACP Individual Member",
+    "The F.L.O.A.T Framework",
+    "The Inner Pathway Reflective Journal",
     "£50",
     "£25",
     "debi@innerpathway.co.uk",
