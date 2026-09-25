@@ -40,14 +40,14 @@ button, input, textarea, select { font: inherit; }
   border-bottom: 1px solid rgba(96,35,58,.12);
 }
 .header-inner {
-  min-height: 82px; display: flex; align-items: center;
+  min-height: 104px; display: flex; align-items: center;
   justify-content: space-between; gap: 24px;
 }
 .brand {
   display: inline-flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--ink);
 }
-.brand img { width: 68px; height: 68px; object-fit: contain; }
+.brand img { width: 92px; height: 92px; object-fit: contain; }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
@@ -80,8 +80,8 @@ button, input, textarea, select { font: inherit; }
   right: -160px; bottom: -180px;
 }
 .hero-grid {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, .75fr);
-  gap: 68px; align-items: center;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px; align-items: center;
 }
 .eyebrow {
   margin: 0 0 12px; color: var(--burgundy); font-size: 12px;
@@ -260,11 +260,12 @@ h3 { font-size: 23px; }
 
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
-  .header-inner { min-height: 72px; }
-  .brand img { width: 58px; height: 58px; }
+  .header-inner { min-height: 86px; gap: 12px; }
+  .brand { gap: 8px; }
+  .brand img { width: 72px; height: 72px; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
-    display: none; position: absolute; top: 72px; left: 0; right: 0;
+    display: none; position: absolute; top: 86px; left: 0; right: 0;
     padding: 14px 20px 20px; background: #fffdfc;
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
   }
@@ -304,8 +305,24 @@ h3 { font-size: 23px; }
 .hero-side {
   position: relative;
   z-index: 1;
-  width: min(100%, 460px);
-  justify-self: end;
+  width: min(100%, 520px);
+  justify-self: center;
+}
+
+@media (min-width: 921px) {
+  .hero-copy {
+    width: min(100%, 520px);
+    justify-self: center;
+    text-align: center;
+  }
+  .hero-copy h1,
+  .hero-copy .lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-copy .actions {
+    justify-content: center;
+  }
 }
 .hero-photo,
 .about-photo {
