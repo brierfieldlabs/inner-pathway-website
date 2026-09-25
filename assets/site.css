@@ -402,6 +402,22 @@ h3 { font-size: 23px; }
   display: inline-block;
   margin-top: 14px;
 }
+.resource-books {
+  margin-top: 46px;
+}
+.resource-subheading {
+  margin-bottom: 18px;
+}
+.children-book-card h4 {
+  margin: 0 0 14px;
+  font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  color: var(--burgundy-deep);
+  font-size: 23px;
+  line-height: 1.2;
+}
+.children-book-card .text-link {
+  display: inline-block;
+}
 
 @media (max-width: 920px) {
   .hero-side {
