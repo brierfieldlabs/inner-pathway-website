@@ -4,7 +4,7 @@ Static replacement website for Inner Pathway Counselling.
 
 ## Status
 
-Preview v0.1.0. The repository is public so GitHub Pages can host the preview, but the site is intentionally marked `noindex,nofollow` and `robots.txt` blocks indexing until explicit launch approval.
+Preview v0.2.0. The repository is public so GitHub Pages can host the preview, but the site is intentionally marked `noindex,nofollow` and `robots.txt` blocks indexing until explicit launch approval.
 
 The live `innerpathway.co.uk` domain is **not** changed by this repository.
 
@@ -33,3 +33,9 @@ Before launch:
 ## Source material
 
 The draft is based on the current Inner Pathway website, the existing Inner Pathway admin/legal material, the established Inner Pathway logo, and confirmed current professional information. No Clinical data belongs in this repository.
+
+## Content migration notes
+
+The current IONOS `/references/` page is intentionally not migrated because it contains generic template/portfolio wording and placeholder contact information rather than Inner Pathway material.
+
+The new draft retains the useful current-site themes around counselling, Debi's background, adults, carers, neurodivergence, face-to-face/online/telephone work and resources, while removing the IONOS contact form, translation widget and marketing-tracker consent layer.
