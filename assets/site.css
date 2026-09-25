@@ -309,20 +309,18 @@ h3 { font-size: 23px; }
   justify-self: center;
 }
 
-@media (min-width: 921px) {
-  .hero-copy {
-    width: min(100%, 520px);
-    justify-self: center;
-    text-align: center;
-  }
-  .hero-copy h1,
-  .hero-copy .lead {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .hero-copy .actions {
-    justify-content: center;
-  }
+.hero-copy {
+  width: min(100%, 520px);
+  justify-self: center;
+  text-align: center;
+}
+.hero-copy h1,
+.hero-copy .lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-copy .actions {
+  justify-content: center;
 }
 .hero-photo,
 .about-photo {
