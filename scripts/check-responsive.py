@@ -6,6 +6,7 @@ import contextlib
 import http.server
 import json
 import os
+import shutil
 import socketserver
 import threading
 import time
@@ -35,6 +36,7 @@ def main() -> int:
     try:
         from selenium import webdriver
         from selenium.webdriver.chrome.options import Options
+        from selenium.webdriver.chrome.service import Service
     except ImportError as exc:
         raise SystemExit("Selenium is not installed on this workbench") from exc
 
@@ -48,13 +50,18 @@ def main() -> int:
 
     failures = []
     options = Options()
+    browser_binary = shutil.which("chromium") or shutil.which("chromium-browser") or shutil.which("google-chrome")
+    driver_binary = shutil.which("chromedriver")
+    if browser_binary:
+        options.binary_location = browser_binary
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--hide-scrollbars")
 
     try:
-        driver = webdriver.Chrome(options=options)
+        service = Service(executable_path=driver_binary) if driver_binary else Service()
+        driver = webdriver.Chrome(service=service, options=options)
         for width, height in VIEWPORTS:
             driver.set_window_size(width, height)
             driver.get(url)
