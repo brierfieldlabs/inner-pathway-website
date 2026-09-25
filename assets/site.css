@@ -40,14 +40,14 @@ button, input, textarea, select { font: inherit; }
   border-bottom: 1px solid rgba(96,35,58,.12);
 }
 .header-inner {
-  min-height: 144px; display: flex; align-items: center;
+  min-height: 170px; display: flex; align-items: center;
   justify-content: space-between; gap: 24px;
 }
 .brand {
   display: inline-flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--ink);
 }
-.brand img { width: 132px; height: 132px; object-fit: contain; }
+.brand img { width: 160px; height: 160px; object-fit: contain; }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
@@ -272,12 +272,12 @@ h3 { font-size: 23px; }
 
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
-  .header-inner { min-height: 104px; gap: 8px; }
+  .header-inner { min-height: 120px; gap: 8px; }
   .brand { gap: 6px; }
-  .brand img { width: 88px; height: 88px; }
+  .brand img { width: 104px; height: 104px; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
-    display: none; position: absolute; top: 104px; left: 0; right: 0;
+    display: none; position: absolute; top: 120px; left: 0; right: 0;
     padding: 14px 20px 20px; background: #fffdfc;
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
   }
