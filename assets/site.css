@@ -181,6 +181,13 @@ h3 { font-size: 23px; }
 .price-card span { font-weight: 700; }
 .price-card strong { font-size: 30px; font-family: "PT Serif", Georgia, serif; }
 .price-card p { margin-bottom: 0; color: #ecdde2; }
+.price-card .session-length { margin-top: 14px; }
+.session-formats {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: #ecdde2;
+}
+.session-formats li { margin: 4px 0; }
 .qualification-grid {
   display: grid; grid-template-columns: 1fr 1.15fr .6fr;
   gap: 42px; align-items: start;
