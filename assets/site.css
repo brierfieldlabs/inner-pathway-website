@@ -310,16 +310,26 @@ h3 { font-size: 23px; }
 }
 
 .hero-copy {
-  width: min(100%, 520px);
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
   justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
+.hero-copy .eyebrow,
 .hero-copy h1,
-.hero-copy .lead {
+.hero-copy .lead,
+.hero-copy .micro {
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 .hero-copy .actions {
+  width: 100%;
   justify-content: center;
 }
 .hero-photo,
