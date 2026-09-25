@@ -11,6 +11,11 @@ REQUIRED = [
     ROOT / "assets/site.js",
     ROOT / "assets/inner-pathway-logo.png",
     ROOT / "assets/online-telephone-counselling-badge.png",
+    ROOT / "assets/photos/debi-portrait.png",
+    ROOT / "assets/photos/debi-portrait-920.webp",
+    ROOT / "assets/photos/debi-counselling-room.jpg",
+    ROOT / "assets/resources/float-framework.png",
+    ROOT / "assets/resources/inner-pathway-reflective-journal.png",
     ROOT / "robots.txt",
     ROOT / ".nojekyll",
 ]
@@ -49,6 +54,8 @@ for path in HTML:
     parser.feed(text)
     if not "".join(parser.title).strip():
         errors.append(f"{path.name}: missing title")
+    if '<meta name="viewport" content="width=device-width, initial-scale=1">' not in text:
+        errors.append(f"{path.name}: missing responsive viewport metadata")
     if path.name != "404.html":
         robots = " ".join(parser.meta_robots).lower()
         if "noindex" not in robots:
