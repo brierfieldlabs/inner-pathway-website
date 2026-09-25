@@ -178,8 +178,8 @@ h3 { font-size: 23px; }
   background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
 }
 .price-card div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.price-card span { font-weight: 700; }
-.price-card strong { font-size: 30px; font-family: "PT Serif", Georgia, serif; }
+.price-card span { font-size: 18px; font-weight: 700; }
+.price-card strong { font-size: 26px; font-family: "PT Serif", Georgia, serif; }
 .price-card p { margin-bottom: 0; color: #ecdde2; }
 .price-card .session-length { margin-top: 14px; }
 .session-formats {
