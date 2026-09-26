@@ -152,6 +152,12 @@ else:
         membership = structured.get("memberOf", {})
         if membership.get("identifier") != "01020412":
             errors.append("index.html: JSON-LD BACP membership identifier must remain 01020412")
+        expected_social_identities = [
+            "https://www.instagram.com/innerpathwaycounselling/",
+            "https://www.facebook.com/people/Inner-Pathway-Counselling/61590994575444/",
+        ]
+        if structured.get("sameAs") != expected_social_identities:
+            errors.append("index.html: JSON-LD social identities must use the stable Instagram and Facebook URLs")
 
 for needle in [
     "Inner Pathway Counselling",
