@@ -40,7 +40,7 @@ button, input, textarea, select { font: inherit; }
   border-bottom: 1px solid rgba(96,35,58,.12);
 }
 .header-inner {
-  min-height: 156px; display: flex; align-items: center;
+  min-height: 144px; display: flex; align-items: center;
   justify-content: space-between; gap: 24px;
 }
 .brand {
@@ -49,27 +49,27 @@ button, input, textarea, select { font: inherit; }
 }
 .brand-mark {
   position: relative;
-  width: 140px;
-  height: 140px;
-  flex: 0 0 140px;
+  width: 128px;
+  height: 128px;
+  flex: 0 0 128px;
   overflow: hidden;
 }
 .brand-mark img {
   position: absolute;
-  width: 251px;
+  width: 230px;
   max-width: none;
   height: auto;
-  left: -54px;
-  top: -41px;
+  left: -49px;
+  top: -38px;
 }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
-  letter-spacing: .08em; font-size: 17px;
+  letter-spacing: .06em; font-size: 14px;
 }
 .brand small {
-  margin-top: 5px; color: var(--ink);
-  text-transform: uppercase; letter-spacing: .24em; font-size: 10px;
+  margin-top: 4px; color: var(--ink);
+  text-transform: uppercase; letter-spacing: .18em; font-size: 8px;
 }
 .site-nav { display: flex; align-items: center; gap: 26px; }
 .site-nav a {
@@ -286,21 +286,23 @@ h3 { font-size: 23px; }
 
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
-  .header-inner { min-height: 120px; gap: 8px; }
+  .header-inner { min-height: 112px; gap: 8px; }
   .brand { gap: 8px; }
   .brand-mark {
-    width: 104px;
-    height: 104px;
-    flex-basis: 104px;
+    width: 96px;
+    height: 96px;
+    flex-basis: 96px;
   }
   .brand-mark img {
-    width: 186px;
-    left: -40px;
-    top: -31px;
+    width: 172px;
+    left: -37px;
+    top: -28px;
   }
+  .brand strong { font-size: 12px; letter-spacing: .05em; }
+  .brand small { font-size: 7px; letter-spacing: .15em; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
-    display: none; position: absolute; top: 120px; left: 0; right: 0;
+    display: none; position: absolute; top: 112px; left: 0; right: 0;
     padding: 14px 20px 20px; background: #fffdfc;
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
   }
