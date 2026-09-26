@@ -69,7 +69,7 @@ button, input, textarea, select { font: inherit; }
 }
 .brand small {
   margin-top: 4px; color: var(--ink);
-  text-transform: uppercase; letter-spacing: .18em; font-size: 8px;
+  text-transform: uppercase; letter-spacing: .18em; font-size: 9px;
 }
 .site-nav { display: flex; align-items: center; gap: 26px; }
 .site-nav a {
@@ -299,7 +299,7 @@ h3 { font-size: 23px; }
     top: -18px;
   }
   .brand strong { font-size: 15px; letter-spacing: .05em; }
-  .brand small { font-size: 7px; letter-spacing: .15em; }
+  .brand small { font-size: 8px; letter-spacing: .15em; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
     display: none; position: absolute; top: 80px; left: 0; right: 0;
