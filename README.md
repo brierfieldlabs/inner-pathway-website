@@ -4,9 +4,9 @@ Static replacement website for Inner Pathway Counselling.
 
 ## Status
 
-The repository is public so GitHub Pages can host the preview, but the site is intentionally marked `noindex,nofollow` and `robots.txt` blocks indexing until explicit launch approval.
+The approved website is published through GitHub Pages at `innerpathway.co.uk`. The live source allows search-engine indexing, while the generated `/staging/` copy is automatically forced to `noindex,nofollow` and a blocking `robots.txt`.
 
-The live `innerpathway.co.uk` domain is **not** changed by this repository.
+The production custom domain is managed through GitHub Pages and IONOS DNS. Mail-related DNS records are independent of this repository and must not be changed as part of website work.
 
 ## Development
 
@@ -22,13 +22,12 @@ python3 scripts/validate-site.py
 
 GitHub Pages deployment is performed by `.github/workflows/pages.yml` after validation passes on `main`.
 
-Before launch:
+Production safeguards:
 
-1. Debi/Darren approve copy and design.
-2. Remove `noindex,nofollow` and change `robots.txt` to allow indexing.
-3. Add the approved custom domain with `CNAME`.
-4. Change DNS only after the GitHub Pages custom-domain check is healthy.
-5. Keep the previous hosting arrangement available until the cutover is verified.
+1. Normal edits go to `staging` first and are reviewed there.
+2. Promotion to `main` happens only after explicit approval.
+3. The live site remains indexable; the generated staging copy remains blocked from indexing.
+4. Custom-domain and DNS changes require explicit approval and must not disturb mail-related DNS records.
 
 ## Source material
 
