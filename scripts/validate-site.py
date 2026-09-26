@@ -13,6 +13,7 @@ REQUIRED = [
     ROOT / "assets/site.css",
     ROOT / "assets/site.js",
     ROOT / "assets/inner-pathway-logo.png",
+    ROOT / "assets/inner-pathway-logo-256.webp",
     ROOT / "assets/online-telephone-counselling-badge.png",
     ROOT / "assets/photos/debi-portrait.png",
     ROOT / "assets/photos/debi-portrait-920.webp",
@@ -187,6 +188,10 @@ if sitemap_path.exists():
             errors.append("sitemap.xml must list exactly the public HTML pages")
     except ET.ParseError as exc:
         errors.append(f"sitemap.xml: invalid XML: {exc}")
+
+for path in HTML:
+    if path.exists() and '<img src="assets/inner-pathway-logo.png"' in path.read_text(encoding="utf-8"):
+        errors.append(f"{path.name}: visible header logo must use the lightweight WebP derivative")
 
 for banned in ["TODO", "Lorem ipsum", "example.com"]:
     for path in HTML:
