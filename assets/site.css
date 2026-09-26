@@ -49,23 +49,23 @@ button, input, textarea, select { font: inherit; }
 }
 .brand-mark {
   position: relative;
-  width: 96px;
-  height: 96px;
-  flex: 0 0 96px;
+  width: 90px;
+  height: 90px;
+  flex: 0 0 90px;
   overflow: hidden;
 }
 .brand-mark img {
   position: absolute;
-  width: 172px;
+  width: 161px;
   max-width: none;
   height: auto;
-  left: -37px;
-  top: -28px;
+  left: -34px;
+  top: -26px;
 }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
-  letter-spacing: .06em; font-size: 15px;
+  letter-spacing: .06em; font-size: 16px;
 }
 .brand small {
   margin-top: 4px; color: var(--ink);
@@ -289,16 +289,16 @@ h3 { font-size: 23px; }
   .header-inner { min-height: 80px; gap: 8px; }
   .brand { gap: 8px; }
   .brand-mark {
-    width: 66px;
-    height: 66px;
-    flex-basis: 66px;
+    width: 60px;
+    height: 60px;
+    flex-basis: 60px;
   }
   .brand-mark img {
-    width: 118px;
-    left: -25px;
-    top: -19px;
+    width: 108px;
+    left: -23px;
+    top: -18px;
   }
-  .brand strong { font-size: 13px; letter-spacing: .05em; }
+  .brand strong { font-size: 15px; letter-spacing: .05em; }
   .brand small { font-size: 7px; letter-spacing: .15em; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
