@@ -70,10 +70,24 @@ def main() -> int:
             time.sleep(0.2)
             driver.execute_script("window.scrollTo(0, 0)")
             result = driver.execute_script("""
+                const isClippedByAncestor = el => {
+                  const r = el.getBoundingClientRect();
+                  for (let parent = el.parentElement; parent && parent !== document.documentElement; parent = parent.parentElement) {
+                    const cs = getComputedStyle(parent);
+                    const clipsX = ['hidden', 'clip'].includes(cs.overflowX) ||
+                                   ['hidden', 'clip'].includes(cs.overflow);
+                    if (!clipsX) continue;
+                    const pr = parent.getBoundingClientRect();
+                    if (r.left < pr.left - 1 || r.right > pr.right + 1) return true;
+                  }
+                  return false;
+                };
                 const offenders = [...document.querySelectorAll('body *')]
                   .filter(el => {
                     const r = el.getBoundingClientRect();
-                    return r.width > 0 && (r.right > window.innerWidth + 1 || r.left < -1);
+                    const leavesViewport = r.width > 0 &&
+                      (r.right > window.innerWidth + 1 || r.left < -1);
+                    return leavesViewport && !isClippedByAncestor(el);
                   })
                   .slice(0, 12)
                   .map(el => `${el.tagName.toLowerCase()}.${el.className}`);
