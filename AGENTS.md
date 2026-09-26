@@ -7,7 +7,7 @@ This repository is the Inner Pathway Counselling website. Debi and Darren both m
 - `staging` is the editable/test website. All normal website changes requested by Debi or Darren go here first.
 - `main` is the live website source. Never edit or push directly to `main`.
 - GitHub Pages publishes both from this one repository: live at the site root and test at `/staging/`.
-- The deployed staging copy is automatically marked `TEST VERSION · Changes here are not live` and forced to `noindex,nofollow`.
+- The deployed staging copy is automatically marked `TEST SITE · Changes here are not live` and forced to `noindex,nofollow`.
 
 ## Normal edit workflow
 
@@ -31,7 +31,7 @@ Each staging PR should represent one coherent requested change where practical. 
 
 ## Publishing a tested change
 
-Only publish when Debi or Darren explicitly says the staging version is approved and asks to publish, promote, make live, or equivalent.
+Only publish when Debi or Darren explicitly says the staging site is approved and asks to publish, promote, make live, or equivalent.
 
 1. Confirm `staging` is clean, pushed, deployed, and its latest validation is green.
 2. Compare `staging` with `main` and summarise what will go live.
@@ -40,8 +40,7 @@ Only publish when Debi or Darren explicitly says the staging version is approved
 5. If it fails, fix the problem on `staging`, redeploy staging, and re-check before proceeding.
 6. When green, merge the PR. No separate human GitHub reviewer is required because the user already gave the publish instruction in ChatGPT.
 7. Bring `staging` forward to the resulting `main` commit and push it so both branches are aligned after release.
-8. Create the semantic version tag for the published version when appropriate.
-9. Confirm the GitHub Pages live-root deployment succeeds and verify the requested change there.
+8. Confirm the GitHub Pages live-root deployment succeeds and verify the requested change there.
 
 ## Reverting a staging change
 
@@ -65,7 +64,7 @@ Never use `reset --hard`, force-push, or branch rewrites to undo shared staging 
 - Do not alter the production custom domain, live DNS, indexing policy, or launch safeguards unless the user explicitly requests that specific operation.
 - Do not expose private client or clinical information anywhere in this public repository.
 - Keep changes mobile-friendly and verify narrow layouts before presenting staging as ready.
-- Use semantic versions in the form `vX.Y.Z`; do not use a `web-` prefix.
+- Do not use version numbers or version prefixes in commit messages, pull-request titles, branch names, tags, website copy or project documentation.
 - Prefer concise, descriptive commit and pull-request titles.
 
 ## Deployment
