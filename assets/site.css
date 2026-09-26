@@ -40,22 +40,36 @@ button, input, textarea, select { font: inherit; }
   border-bottom: 1px solid rgba(96,35,58,.12);
 }
 .header-inner {
-  min-height: 82px; display: flex; align-items: center;
+  min-height: 144px; display: flex; align-items: center;
   justify-content: space-between; gap: 24px;
 }
 .brand {
   display: inline-flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--ink);
 }
-.brand img { width: 56px; height: 56px; object-fit: contain; }
+.brand-mark {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex: 0 0 90px;
+  overflow: hidden;
+}
+.brand-mark img {
+  position: absolute;
+  width: 161px;
+  max-width: none;
+  height: auto;
+  left: -34px;
+  top: -26px;
+}
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
-  letter-spacing: .08em; font-size: 17px;
+  letter-spacing: .06em; font-size: 16px;
 }
 .brand small {
-  margin-top: 5px; color: var(--ink);
-  text-transform: uppercase; letter-spacing: .24em; font-size: 10px;
+  margin-top: 4px; color: var(--ink);
+  text-transform: uppercase; letter-spacing: .18em; font-size: 9px;
 }
 .site-nav { display: flex; align-items: center; gap: 26px; }
 .site-nav a {
@@ -69,7 +83,7 @@ button, input, textarea, select { font: inherit; }
 }
 .hero {
   position: relative; overflow: hidden;
-  padding: 92px 0 84px;
+  padding: 64px 0 60px;
   background:
     radial-gradient(circle at 86% 15%, rgba(96,35,58,.13), transparent 30%),
     linear-gradient(150deg, #fffdfc 0%, #f8f3f4 62%, #eee4e7 100%);
@@ -80,8 +94,8 @@ button, input, textarea, select { font: inherit; }
   right: -160px; bottom: -180px;
 }
 .hero-grid {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, .75fr);
-  gap: 68px; align-items: center;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px; align-items: center;
 }
 .eyebrow {
   margin: 0 0 12px; color: var(--burgundy); font-size: 12px;
@@ -95,6 +109,25 @@ h1, h2, h3 {
 h1 {
   max-width: 16ch; margin-bottom: 24px;
   font-size: clamp(42px, 6vw, 72px); letter-spacing: -.025em;
+}
+.hero h1 {
+  margin-bottom: 14px;
+  font-size: clamp(30px, 4vw, 46px);
+}
+.hero h1 .hero-reconnect {
+  display: block;
+  margin-top: .14em;
+  font-size: .82em;
+}
+.hero .lead {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+.hero .actions {
+  margin-top: 16px;
+}
+.hero .micro {
+  margin-top: 8px;
 }
 h2 { font-size: clamp(30px, 4vw, 48px); }
 h3 { font-size: 23px; }
@@ -151,7 +184,7 @@ h3 { font-size: 23px; }
 .section-deep { background: var(--burgundy-deep); color: #fff; }
 .section-deep h2 { color: #fff; }
 .fee-grid {
-  display: grid; grid-template-columns: 1.15fr repeat(2,minmax(220px,.85fr));
+  display: grid; grid-template-columns: 1.15fr minmax(280px,.85fr);
   gap: 24px; align-items: stretch;
 }
 .price-card {
@@ -159,9 +192,16 @@ h3 { font-size: 23px; }
   background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
 }
 .price-card div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.price-card span { font-weight: 700; }
-.price-card strong { font-size: 38px; font-family: "PT Serif", Georgia, serif; }
+.price-card span { font-size: 18px; font-weight: 700; }
+.price-card strong { font-size: 26px; font-family: "PT Serif", Georgia, serif; }
 .price-card p { margin-bottom: 0; color: #ecdde2; }
+.price-card .session-length { margin-top: 14px; }
+.session-formats {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: #ecdde2;
+}
+.session-formats li { margin: 4px 0; }
 .qualification-grid {
   display: grid; grid-template-columns: 1fr 1.15fr .6fr;
   gap: 42px; align-items: start;
@@ -236,8 +276,8 @@ h3 { font-size: 23px; }
   .hero-grid, .split, .contact-grid, .qualification-grid { grid-template-columns: 1fr; }
   .hero-grid { gap: 36px; }
   .hero-card { max-width: 620px; }
-  .fee-grid { grid-template-columns: 1fr 1fr; }
-  .fee-grid > :first-child { grid-column: 1 / -1; }
+  .fee-grid { grid-template-columns: 1fr; }
+  .fee-grid > :first-child { grid-column: auto; }
   .cards.three, .cards.two { grid-template-columns: 1fr 1fr; }
   .qualification-grid .badge-panel { max-width: 270px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -246,18 +286,45 @@ h3 { font-size: 23px; }
 
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
-  .header-inner { min-height: 72px; }
-  .brand img { width: 48px; height: 48px; }
+  .header-inner { min-height: 80px; gap: 8px; }
+  .brand { gap: 8px; }
+  .brand-mark {
+    width: 60px;
+    height: 60px;
+    flex-basis: 60px;
+  }
+  .brand-mark img {
+    width: 108px;
+    left: -23px;
+    top: -18px;
+  }
+  .brand strong { font-size: 15px; letter-spacing: .05em; }
+  .brand small { font-size: 8px; letter-spacing: .15em; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
-    display: none; position: absolute; top: 72px; left: 0; right: 0;
+    display: none; position: absolute; top: 80px; left: 0; right: 0;
     padding: 14px 20px 20px; background: #fffdfc;
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
   }
   .site-nav.open { display: flex; }
   .site-nav a { padding: 8px 0; }
-  .hero { padding: 64px 0 62px; }
-  h1 { font-size: clamp(40px, 13vw, 58px); }
+  .hero { padding: 42px 0; }
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-side {
+    display: contents;
+  }
+  .hero-photo { order: 1; }
+  .hero-copy { order: 2; }
+  .hero-card {
+    order: 3;
+    width: 100%;
+    max-width: 620px;
+    margin-top: 0;
+  }
+  .hero h1 { font-size: clamp(29px, 8vw, 38px); }
   .section { padding: 64px 0; }
   .cards.three, .cards.two, .fee-grid { grid-template-columns: 1fr; }
   .fee-grid > :first-child { grid-column: auto; }
@@ -271,12 +338,36 @@ h3 { font-size: 23px; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
-/* v0.3.0 photography and responsive refinements */
+/* Photography and responsive refinements */
 .hero-side {
   position: relative;
   z-index: 1;
-  width: min(100%, 460px);
-  justify-self: end;
+  width: min(100%, 520px);
+  justify-self: center;
+}
+
+.hero-copy {
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hero-copy .eyebrow,
+.hero-copy h1,
+.hero-copy .lead,
+.hero-copy .micro {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.hero-copy .actions {
+  width: 100%;
+  justify-content: center;
 }
 .hero-photo,
 .about-photo {
@@ -332,6 +423,40 @@ h3 { font-size: 23px; }
 .resource-card h3 {
   margin-bottom: 12px;
 }
+.resource-card .text-link {
+  display: inline-block;
+  margin-top: 14px;
+}
+.resource-books {
+  margin-top: 46px;
+}
+.resource-subheading {
+  margin-bottom: 18px;
+}
+.children-book-card {
+  display: grid;
+  grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.children-book-cover {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  justify-self: center;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(74,28,46,.12);
+}
+.children-book-card h4 {
+  margin: 0 0 14px;
+  font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  color: var(--burgundy-deep);
+  font-size: 23px;
+  line-height: 1.2;
+}
+.children-book-card .text-link {
+  display: inline-block;
+}
 
 @media (max-width: 920px) {
   .hero-side {
@@ -386,6 +511,13 @@ h3 { font-size: 23px; }
   .resource-cover {
     max-width: min(240px, 78vw);
   }
+  .children-book-card {
+    grid-template-columns: minmax(90px, 130px) minmax(0, 1fr);
+    gap: 20px;
+  }
+  .children-book-cover {
+    max-width: 130px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -394,10 +526,10 @@ h3 { font-size: 23px; }
     width: min(100% - 24px, var(--max));
   }
   .hero {
-    padding: 48px 0 52px;
+    padding: 34px 0 36px;
   }
-  h1 {
-    font-size: clamp(34px, 11.5vw, 48px);
+  .hero h1 {
+    font-size: clamp(28px, 7.8vw, 34px);
   }
   h2 {
     font-size: clamp(28px, 9vw, 38px);
@@ -420,5 +552,12 @@ h3 { font-size: 23px; }
   }
   .resource-cover {
     max-width: min(220px, 74vw);
+  }
+  .children-book-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .children-book-cover {
+    max-width: min(190px, 68vw);
   }
 }

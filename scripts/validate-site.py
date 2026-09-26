@@ -82,9 +82,8 @@ for needle in [
     "The F.L.O.A.T Framework",
     "The Inner Pathway Reflective Journal",
     "£50",
-    "£25",
+    "A limited number of reduced-fee spaces are available.",
     "debi@innerpathway.co.uk",
-    "07363 056570",
 ]:
     if needle not in index:
         errors.append(f"index.html: missing required content: {needle}")
