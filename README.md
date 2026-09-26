@@ -4,7 +4,7 @@ Static replacement website for Inner Pathway Counselling.
 
 ## Status
 
-Preview v0.2.0. The repository is public so GitHub Pages can host the preview, but the site is intentionally marked `noindex,nofollow` and `robots.txt` blocks indexing until explicit launch approval.
+The repository is public so GitHub Pages can host the preview, but the site is intentionally marked `noindex,nofollow` and `robots.txt` blocks indexing until explicit launch approval.
 
 The live `innerpathway.co.uk` domain is **not** changed by this repository.
 
