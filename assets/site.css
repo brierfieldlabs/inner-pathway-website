@@ -40,7 +40,7 @@ button, input, textarea, select { font: inherit; }
   border-bottom: 1px solid rgba(96,35,58,.12);
 }
 .header-inner {
-  min-height: 108px; display: flex; align-items: center;
+  min-height: 156px; display: flex; align-items: center;
   justify-content: space-between; gap: 24px;
 }
 .brand {
@@ -49,18 +49,18 @@ button, input, textarea, select { font: inherit; }
 }
 .brand-mark {
   position: relative;
-  width: 92px;
-  height: 92px;
-  flex: 0 0 92px;
+  width: 140px;
+  height: 140px;
+  flex: 0 0 140px;
   overflow: hidden;
 }
 .brand-mark img {
   position: absolute;
-  width: 165px;
+  width: 251px;
   max-width: none;
   height: auto;
-  left: -35px;
-  top: -27px;
+  left: -54px;
+  top: -41px;
 }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
@@ -286,21 +286,21 @@ h3 { font-size: 23px; }
 
 @media (max-width: 720px) {
   .wrap { width: min(100% - 28px, var(--max)); }
-  .header-inner { min-height: 84px; gap: 8px; }
+  .header-inner { min-height: 120px; gap: 8px; }
   .brand { gap: 8px; }
   .brand-mark {
-    width: 72px;
-    height: 72px;
-    flex-basis: 72px;
+    width: 104px;
+    height: 104px;
+    flex-basis: 104px;
   }
   .brand-mark img {
-    width: 129px;
-    left: -27px;
-    top: -21px;
+    width: 186px;
+    left: -40px;
+    top: -31px;
   }
   .nav-toggle { display: inline-flex; }
   .site-nav {
-    display: none; position: absolute; top: 84px; left: 0; right: 0;
+    display: none; position: absolute; top: 120px; left: 0; right: 0;
     padding: 14px 20px 20px; background: #fffdfc;
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
   }
