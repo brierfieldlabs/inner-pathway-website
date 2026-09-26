@@ -313,7 +313,7 @@ h3 { font-size: 23px; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
-/* v0.3.0 photography and responsive refinements */
+/* Photography and responsive refinements */
 .hero-side {
   position: relative;
   z-index: 1;
