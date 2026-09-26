@@ -65,7 +65,7 @@ button, input, textarea, select { font: inherit; }
 .brand span { display: grid; line-height: 1.05; }
 .brand strong {
   color: var(--burgundy); text-transform: uppercase;
-  letter-spacing: .06em; font-size: 14px;
+  letter-spacing: .06em; font-size: 15px;
 }
 .brand small {
   margin-top: 4px; color: var(--ink);
@@ -298,7 +298,7 @@ h3 { font-size: 23px; }
     left: -27px;
     top: -21px;
   }
-  .brand strong { font-size: 12px; letter-spacing: .05em; }
+  .brand strong { font-size: 13px; letter-spacing: .05em; }
   .brand small { font-size: 7px; letter-spacing: .15em; }
   .nav-toggle { display: inline-flex; }
   .site-nav {
