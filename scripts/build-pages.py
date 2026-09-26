@@ -13,7 +13,7 @@ ALLOWED_HIDDEN = {".nojekyll"}
 ROBOTS_META = '<meta name="robots" content="noindex,nofollow">'
 STAGING_BANNER = (
     '<div class="staging-banner" data-staging-banner role="status">'
-    'TEST VERSION · Changes here are not live'
+    'TEST SITE · Changes here are not live'
     '</div>'
 )
 STAGING_CSS = """
