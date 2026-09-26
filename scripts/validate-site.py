@@ -2,6 +2,7 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
+import xml.etree.ElementTree as ET
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +18,7 @@ REQUIRED = [
     ROOT / "assets/resources/float-framework.png",
     ROOT / "assets/resources/inner-pathway-reflective-journal.png",
     ROOT / "robots.txt",
+    ROOT / "sitemap.xml",
     ROOT / ".nojekyll",
 ]
 
@@ -30,6 +32,7 @@ class Parser(HTMLParser):
         self.title = []
         self.in_title = False
         self.meta_robots = []
+        self.canonicals = []
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if tag == "a" and a.get("href"): self.links.append(a["href"])
@@ -37,6 +40,8 @@ class Parser(HTMLParser):
         if tag == "title": self.in_title = True
         if tag == "meta" and a.get("name","").lower() == "robots":
             self.meta_robots.append(a.get("content",""))
+        if tag == "link" and a.get("rel", "").lower() == "canonical" and a.get("href"):
+            self.canonicals.append(a["href"])
     def handle_endtag(self, tag):
         if tag == "title": self.in_title = False
     def handle_data(self, data):
@@ -58,8 +63,17 @@ for path in HTML:
         errors.append(f"{path.name}: missing responsive viewport metadata")
     if path.name != "404.html":
         robots = " ".join(parser.meta_robots).lower()
-        if "noindex" not in robots:
-            errors.append(f"{path.name}: preview must remain noindex until launch approval")
+        if "noindex" in robots or "nofollow" in robots:
+            errors.append(f"{path.name}: live source must allow indexing and following")
+        if "index" not in robots or "follow" not in robots:
+            errors.append(f"{path.name}: live source must explicitly use index,follow")
+        expected_canonical = {
+            "index.html": "https://innerpathway.co.uk/",
+            "privacy.html": "https://innerpathway.co.uk/privacy.html",
+            "legal.html": "https://innerpathway.co.uk/legal.html",
+        }[path.name]
+        if parser.canonicals != [expected_canonical]:
+            errors.append(f"{path.name}: canonical URL must be {expected_canonical}")
     for target in parser.links + parser.images:
         parsed = urlparse(target)
         if parsed.scheme in {"http","https","mailto","tel"} or target.startswith("#"):
@@ -89,8 +103,26 @@ for needle in [
         errors.append(f"index.html: missing required content: {needle}")
 
 robots = (ROOT / "robots.txt").read_text(encoding="utf-8") if (ROOT / "robots.txt").exists() else ""
-if "Disallow: /" not in robots:
-    errors.append("robots.txt must block indexing during preview")
+if "Allow: /" not in robots or "Disallow: /" in robots:
+    errors.append("robots.txt must allow indexing on the live site")
+if "Sitemap: https://innerpathway.co.uk/sitemap.xml" not in robots:
+    errors.append("robots.txt must advertise the production sitemap")
+
+sitemap_path = ROOT / "sitemap.xml"
+if sitemap_path.exists():
+    try:
+        tree = ET.parse(sitemap_path)
+        ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        urls = {node.text for node in tree.findall("sm:url/sm:loc", ns)}
+        expected_urls = {
+            "https://innerpathway.co.uk/",
+            "https://innerpathway.co.uk/privacy.html",
+            "https://innerpathway.co.uk/legal.html",
+        }
+        if urls != expected_urls:
+            errors.append("sitemap.xml must list exactly the public HTML pages")
+    except ET.ParseError as exc:
+        errors.append(f"sitemap.xml: invalid XML: {exc}")
 
 for banned in ["TODO", "Lorem ipsum", "example.com"]:
     for path in HTML:
