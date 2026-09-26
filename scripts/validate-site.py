@@ -3,6 +3,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
+import json
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,11 +35,17 @@ class Parser(HTMLParser):
         self.in_title = False
         self.meta_robots = []
         self.canonicals = []
+        self.meta_names = {}
+        self.meta_properties = {}
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if tag == "a" and a.get("href"): self.links.append(a["href"])
         if tag == "img" and a.get("src"): self.images.append(a["src"])
         if tag == "title": self.in_title = True
+        if tag == "meta" and a.get("name"):
+            self.meta_names[a["name"].lower()] = a.get("content", "")
+        if tag == "meta" and a.get("property"):
+            self.meta_properties[a["property"].lower()] = a.get("content", "")
         if tag == "meta" and a.get("name","").lower() == "robots":
             self.meta_robots.append(a.get("content",""))
         if tag == "link" and a.get("rel", "").lower() == "canonical" and a.get("href"):
@@ -74,6 +82,31 @@ for path in HTML:
         }[path.name]
         if parser.canonicals != [expected_canonical]:
             errors.append(f"{path.name}: canonical URL must be {expected_canonical}")
+        expected_title = "".join(parser.title).strip()
+        expected_description = parser.meta_names.get("description", "")
+        expected_social = {
+            "og:type": "website",
+            "og:locale": "en_GB",
+            "og:site_name": "Inner Pathway Counselling",
+            "og:title": expected_title,
+            "og:description": expected_description,
+            "og:url": expected_canonical,
+            "og:image": "https://innerpathway.co.uk/assets/inner-pathway-logo.png",
+            "og:image:alt": "Inner Pathway Counselling logo",
+        }
+        for key, value in expected_social.items():
+            if parser.meta_properties.get(key) != value:
+                errors.append(f"{path.name}: {key} metadata must be {value}")
+        expected_named_social = {
+            "twitter:card": "summary",
+            "twitter:title": expected_title,
+            "twitter:description": expected_description,
+            "twitter:image": "https://innerpathway.co.uk/assets/inner-pathway-logo.png",
+            "twitter:image:alt": "Inner Pathway Counselling logo",
+        }
+        for key, value in expected_named_social.items():
+            if parser.meta_names.get(key) != value:
+                errors.append(f"{path.name}: {key} metadata must be {value}")
     for target in parser.links + parser.images:
         parsed = urlparse(target)
         if parsed.scheme in {"http","https","mailto","tel"} or target.startswith("#"):
@@ -88,6 +121,37 @@ for path in HTML:
             errors.append(f"{path.name}: broken local reference: {target}")
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
+structured_match = re.search(
+    r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+    index,
+    flags=re.DOTALL,
+)
+if not structured_match:
+    errors.append("index.html: missing JSON-LD structured business data")
+else:
+    try:
+        structured = json.loads(structured_match.group(1))
+    except json.JSONDecodeError as exc:
+        errors.append(f"index.html: invalid JSON-LD: {exc}")
+    else:
+        expected_structured = {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Inner Pathway Counselling",
+            "url": "https://innerpathway.co.uk/",
+            "telephone": "+44 7363 056570",
+            "email": "debi@innerpathway.co.uk",
+        }
+        for key, value in expected_structured.items():
+            if structured.get(key) != value:
+                errors.append(f"index.html: JSON-LD {key} must be {value}")
+        address = structured.get("address", {})
+        if address.get("postalCode") != "WN8 6UR":
+            errors.append("index.html: JSON-LD postal address must identify WN8 6UR")
+        membership = structured.get("memberOf", {})
+        if membership.get("identifier") != "01020412":
+            errors.append("index.html: JSON-LD BACP membership identifier must remain 01020412")
+
 for needle in [
     "Inner Pathway Counselling",
     "Certificate in Online and Telephone Counselling",
