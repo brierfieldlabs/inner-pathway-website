@@ -71,7 +71,13 @@ def protect_staging(staging_root: Path) -> None:
         if "Added only to the deployed staging copy" not in css:
             css_path.write_text(css + STAGING_CSS, encoding="utf-8")
 
-    # The test copy must never claim the production custom domain.
+    # The test copy must never be discoverable or claim the production custom domain.
+    (staging_root / "robots.txt").write_text(
+        "User-agent: *\nDisallow: /\n", encoding="utf-8"
+    )
+    sitemap = staging_root / "sitemap.xml"
+    if sitemap.exists():
+        sitemap.unlink()
     cname = staging_root / "CNAME"
     if cname.exists():
         cname.unlink()
