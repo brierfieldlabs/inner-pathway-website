@@ -427,6 +427,12 @@ h3 { font-size: 23px; }
   display: inline-block;
   margin-top: 14px;
 }
+.quiz-card {
+  margin-top: 22px;
+}
+.quiz-card .actions {
+  margin-top: 18px;
+}
 .resource-books {
   margin-top: 46px;
 }
