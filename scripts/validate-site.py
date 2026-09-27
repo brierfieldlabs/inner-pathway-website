@@ -137,7 +137,7 @@ else:
     else:
         expected_structured = {
             "@context": "https://schema.org",
-            "@type": "ProfessionalService",
+            "@type": "LocalBusiness",
             "name": "Inner Pathway Counselling",
             "url": "https://innerpathway.co.uk/",
             "telephone": "+44 7363 056570",
