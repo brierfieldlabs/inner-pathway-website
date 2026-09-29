@@ -129,6 +129,15 @@ h1 {
 .hero .micro {
   margin-top: 8px;
 }
+.hero-quiz {
+  margin-top: 18px;
+  font-size: 16px;
+}
+.hero-quiz a {
+  color: var(--burgundy);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
 h2 { font-size: clamp(30px, 4vw, 48px); }
 h3 { font-size: 23px; }
 .lead { max-width: 62ch; font-size: 19px; color: #493d41; }
