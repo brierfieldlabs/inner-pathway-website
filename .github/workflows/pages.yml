@@ -10,14 +10,15 @@ on:
 permissions:
   contents: read
 
-# Live and staging share one Pages artifact, so never let deployments race.
+# Only an explicit main-branch push may publish to the production GitHub Pages site.
+# Staging pushes run validations, while CT146 deploys an independent local preview.
 concurrency:
   group: inner-pathway-website-pages
   cancel-in-progress: false
 
 jobs:
   validate:
-    name: Validate static site
+    name: Validate static site and deployment isolation
     runs-on: [self-hosted, Linux, X64, hamblett, normal-ci, github]
     steps:
       - name: Check out source
@@ -26,9 +27,12 @@ jobs:
       - name: Validate website
         run: python3 scripts/validate-site.py
 
+      - name: Check no staging-to-production deployment path
+        run: python3 scripts/check-deployment-isolation.py
+
   deploy:
-    name: Deploy GitHub Pages
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging')
+    name: Deploy production-only GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate
     runs-on: [self-hosted, Linux, X64, hamblett, normal-ci, github]
     permissions:
@@ -39,33 +43,26 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Check out live source
+      - name: Check out live main
         uses: actions/checkout@v7
         with:
           ref: main
           path: source-main
 
-      - name: Check out staging source
-        uses: actions/checkout@v7
-        with:
-          ref: staging
-          path: source-staging
-
-      - name: Build combined live and staging artifact
+      - name: Build production-only artifact
         run: >-
           python3 source-main/scripts/build-pages.py
           --live source-main
-          --staging source-staging
           --output _site
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
 
-      - name: Upload combined static site
+      - name: Upload production-only static site
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
-      - name: Deploy
+      - name: Deploy production
         id: deployment
         uses: actions/deploy-pages@v5
