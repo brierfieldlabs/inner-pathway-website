@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate static site and deployment isolation
+    name: Validate static site
     runs-on: [self-hosted, Linux, X64, hamblett, normal-ci, github]
     steps:
       - name: Check out source
