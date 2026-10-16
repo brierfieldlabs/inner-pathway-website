@@ -1,40 +1,39 @@
 # Inner Pathway Counselling website
 
-Static replacement website for Inner Pathway Counselling.
+Authoritative source repository for the Inner Pathway Counselling website.
 
-## Status
+## Published websites and repositories
 
-The approved website is published through GitHub Pages at `innerpathway.co.uk`. The live source allows search-engine indexing, while the generated `/staging/` copy is automatically forced to `noindex,nofollow` and a blocking `robots.txt`.
+| Purpose | Source | Published address |
+| --- | --- | --- |
+| Approved live website | `brierfieldlabs/inner-pathway-website` branch `main` | https://innerpathway.co.uk/ |
+| Public review website | `brierfieldlabs/inner-pathway-website` branch `staging` | https://staging.innerpathway.co.uk/ |
 
-The production custom domain is managed through GitHub Pages and IONOS DNS. Mail-related DNS records are independent of this repository and must not be changed as part of website work.
+**All website editing takes place in this source repository.** The public review site is automatically copied into the separate **generated** repository `brierfieldlabs/inner-pathway-staging`. Do **not** edit that generated repository manually or grant normal website contributors write access to it. Debi (`deupton-ip`) needs write access to this source repository only.
 
-## Development
+The public staging site contains a draft banner and blocks indexing (`noindex,nofollow` and `robots.txt`). The live site remains indexable. The production domain uses GitHub Pages and IONOS DNS; never change the domain or mail-related DNS as part of ordinary website editing.
 
-Development Git work is carried out on Hamblett CT140. CI must run on the Hamblett self-hosted GitHub Actions runner, not on Darren's laptop.
+## Development and approval
 
-Validation:
+Read [AGENTS.md](AGENTS.md) for the **authoritative edit, preview, approval, publication and rollback workflow**.
+
+- Normal updates are submitted through a short-lived branch and PR to **`staging`**, with validation before merging.
+- After source `staging` changes, Hamblett **CT140** runs `inner-pathway-preview-sync.timer` every 10 minutes. `/usr/local/sbin/inner-pathway-preview-sync` builds and pushes the preview into `brierfieldlabs/inner-pathway-staging`; that repository's GitHub Pages publishes the public staging URL.
+- Verify publication by comparing the source branch commit with the generated repository's `README.md` **Source commit**, checking its GitHub Pages deployment and inspecting the public staging URL.
+- The separate isolated **CT146 local preview** is not the public GitHub Pages staging website.
+- Only explicit approval from Debi or Darren permits a **scoped** publication PR into `main`. Unapproved staging changes must remain out of production.
+- The source `.github/workflows/pages.yml` validates both source branches, but deploys **production only from `main`** after validation. A push to `staging` does not deploy production.
+
+Development Git work is carried out on Hamblett CT140, with GitHub Actions using Hamblett self-hosted runners, not Darren's laptop.
+
+Local validation:
 
 ```bash
 python3 scripts/validate-site.py
 ```
 
-## Deployment
+## Website content and safeguards
 
-GitHub Pages deployment is performed by `.github/workflows/pages.yml` after validation passes on `main`.
+The website is based on approved Inner Pathway counselling information, professional information, the established logo and branding, and relevant admin/legal material. No private client or clinical data belongs in the repository.
 
-Production safeguards:
-
-1. Normal edits go to `staging` first and are reviewed there.
-2. Promotion to `main` happens only after explicit approval.
-3. The live site remains indexable; the generated staging copy remains blocked from indexing.
-4. Custom-domain and DNS changes require explicit approval and must not disturb mail-related DNS records.
-
-## Source material
-
-The draft is based on the current Inner Pathway website, the existing Inner Pathway admin/legal material, the established Inner Pathway logo, and confirmed current professional information. No Clinical data belongs in this repository.
-
-## Content migration notes
-
-The current IONOS `/references/` page is intentionally not migrated because it contains generic template/portfolio wording and placeholder contact information rather than Inner Pathway material.
-
-The new draft retains the useful current-site themes around counselling, Debi's background, adults, carers, neurodivergence, face-to-face/online/telephone work and resources, while removing the IONOS contact form, translation widget and marketing-tracker consent layer.
+The legacy IONOS `/references/` page was intentionally omitted because it contained generic template wording and placeholder contact details. The new site retains useful themes around counselling, Debi's experience, adult clients, carers, neurodivergence, face-to-face/online/telephone work and resources, while omitting the old contact form, translation widget and marketing-tracker consent layer.
