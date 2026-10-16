@@ -1,72 +1,60 @@
 # Inner Pathway website agent workflow
 
-This repository is the Inner Pathway Counselling website. Debi and Darren both manage it through ChatGPT. **Normal edits go to staging, never directly to the live branch.**
+This repository is the **authoritative source** for the Inner Pathway Counselling website. Debi and Darren manage website changes through ChatGPT. **Ordinary website edits go to the `staging` branch first, never straight to the live site.**
 
-## Branch roles
+## Source branches and published sites
 
-- `staging` is the editable/test website. All normal website changes requested by Debi or Darren go here first.
-- `main` is the live website source. Never edit or push directly to `main`.
-- GitHub Pages publishes both from this one repository: live at the site root and test at `/staging/`.
-- The deployed staging copy is automatically marked `TEST SITE · Changes here are not live` and forced to `noindex,nofollow`.
+- `brierfieldlabs/inner-pathway-website` is the **only editable source repository**.
+- `staging` is the source branch for testing and review.
+- `main` is the approved production source for **https://innerpathway.co.uk/**.
+- **https://staging.innerpathway.co.uk/** is published from the separate generated repository `brierfieldlabs/inner-pathway-staging` (`main`). **Do not edit this generated repository directly.**
+- Hamblett CT140 runs `inner-pathway-preview-sync.timer` every 10 minutes. Its `/usr/local/sbin/inner-pathway-preview-sync` job validates the source `staging` branch, builds a non-indexable preview, and pushes it to the generated repository. GitHub Pages then publishes that repository.
+- Hamblett CT146 also runs an isolated *local* preview. It is **not** the public GitHub Pages preview and does not replace the CT140 publishing process.
+- The public preview has an obvious draft banner, `noindex,nofollow`, and a blocking `robots.txt`. It must never be used as the production Pages source.
+- The source repository's `.github/workflows/pages.yml` validates changes on `main` and `staging`, but **only a successful push to `main` deploys production GitHub Pages**. Pushing to `staging` does not deploy production.
 
-## Normal edit workflow
+## Normal website change workflow
 
-When Debi or Darren asks to change, update, add, remove, redesign or fix something on the website, that means **staging only** unless they explicitly ask to publish/promote it.
+When Debi or Darren asks to update the website, interpret this as **staging only** unless they explicitly ask to publish an approved change.
 
-1. Fetch the latest repository state and start from current `origin/staging`.
-2. Create a short-lived change branch from `staging`. Never edit or push directly to `staging` or `main`.
-3. Make only the requested change on that branch.
-4. Preserve the Inner Pathway visual identity unless the user explicitly requests a redesign.
-5. Keep every change mobile-friendly. When browser tooling is available, run `python3 scripts/check-responsive.py --root . --screenshots /tmp/inner-pathway-responsive` to test approximately 320, 390, 768 and 1440 px widths, including overflow and touch targets.
-6. Run `python3 scripts/validate-site.py`.
-7. Commit and push the change branch using the connected user's GitHub identity.
-8. Open a pull request from the change branch into `staging`. No human approval is required.
-9. Wait for the required `Validate static site` check. Fix failures on the change branch.
-10. When green, squash-merge the PR into `staging` and delete the temporary branch.
-11. Wait for the staging GitHub Pages deployment to succeed.
-12. Confirm the deployed staging page loads and give the user the staging URL for review.
-13. Do **not** promote the change to `main` merely because staging CI is green.
+1. Read this file and fetch the latest state of `brierfieldlabs/inner-pathway-website`, especially `origin/staging`.
+2. Create a short-lived branch **from the current `staging`**; never commit directly to `staging` or `main`.
+3. Make only the requested edit. Preserve the established visual identity unless asked to redesign.
+4. Keep pages mobile-friendly. When browser tooling is available, run `python3 scripts/check-responsive.py --root . --screenshots /tmp/inner-pathway-responsive` to check approximately 320, 390, 768 and 1440 px layouts.
+5. Run `python3 scripts/validate-site.py`.
+6. Commit and push the change branch using the connected user's GitHub identity, then open a PR **into the source repository's `staging` branch**.
+7. Wait for the required `Validate static site` check; fix any failures. When green, squash-merge the PR into `staging` and delete the temporary branch.
+8. Allow the CT140 synchronisation cycle (up to 10 minutes) and GitHub Pages deployment to complete. Verify the generated repository's `README.md` **Source commit** matches the source `staging` commit; confirm its Pages deployment succeeded.
+9. Verify the requested change at **https://staging.innerpathway.co.uk/** and give Debi or Darren that link for review. Account for browser caching if GitHub Pages has deployed.
+10. **Do not publish to `main` merely because staging CI or the preview succeeded.**
 
-Each staging PR should represent one coherent requested change where practical. This makes changes independently reversible.
+The generated preview repository is intentionally **read-only for normal website editors**, including Debi. The CT140 synchronisation job has the required publication access. **Never ask to grant `deupton-ip` write access to `inner-pathway-staging` to complete an ordinary edit.** If the preview is stale, diagnose the source `staging` commit, CT140 timer/service, generated repository's source commit and GitHub Pages deployment in that order.
 
-## Publishing a tested change
+Each staging PR should represent one coherent requested change where practical, to make changes independently reversible.
 
-Only publish when Debi or Darren explicitly says the staging site is approved and asks to publish, promote, make live, or equivalent.
+## Publishing an approved change
 
-1. Confirm `staging` is clean, pushed, deployed, and its latest validation is green.
-2. Compare `staging` with `main` and summarise what will go live.
-3. Open a pull request from `staging` to `main`.
-4. Wait for the required `Validate static site` check.
-5. If it fails, fix the problem on `staging`, redeploy staging, and re-check before proceeding.
-6. When green, merge the PR. No separate human GitHub reviewer is required because the user already gave the publish instruction in ChatGPT.
-7. Bring `staging` forward to the resulting `main` commit and push it so both branches are aligned after release.
-8. Confirm the GitHub Pages live-root deployment succeeds and verify the requested change there.
+Only publish if Debi or Darren **explicitly approves the tested change and asks for it to go live**.
 
-## Reverting a staging change
+1. Confirm the requested change is visible on the public staging URL and the validation and preview deployment succeeded.
+2. Compare `staging` with `main`; describe **exactly** which changes would reach production. Never bundle other unapproved staging work.
+3. If every difference is explicitly approved, a PR from `staging` to `main` is appropriate. If staging contains other work, instead create a release branch from `main` containing **only** the approved changes and open its PR into `main`.
+4. Wait for `Validate static site`; fix failures on the proposed branch, revalidate and re-review any changed public copy as necessary.
+5. Merge only the approved PR. No separate GitHub reviewer is required after the user has expressly approved publication in ChatGPT.
+6. Confirm the source repository's production GitHub Pages deployment succeeded and verify the approved change at **https://innerpathway.co.uk/**.
+7. Reconcile any divergent `staging` history using a reviewed PR, rather than force-pushing or silently resetting it.
 
-If Debi or Darren asks to undo, revert or roll back a change that has already reached staging:
+## Reverting staging
 
-1. Identify the staging squash commit or pull request that introduced that specific change.
-2. Create a new short-lived revert branch from current `staging`.
-3. Use `git revert` on that commit rather than resetting or rewriting branch history.
-4. Run validation and responsive QA as appropriate.
-5. Push the revert branch and open a pull request into `staging`.
-6. When `Validate static site` is green, squash-merge the revert PR.
-7. Verify the staging deployment.
-
-Never use `reset --hard`, force-push, or branch rewrites to undo shared staging history. Existing staging commits made before this PR-first rule are still reversible with `git revert` by commit SHA.
+For a rollback, identify the staging PR/squash commit, branch from the current source `staging`, revert that change without rewriting history, validate, open a PR into `staging`, and merge once green. Verify the public staging deployment after the CT140 synchronisation and GitHub Pages finish. Never use `reset --hard` or force-push on shared branches.
 
 ## Safety rails
 
-- Never edit, commit to, or push directly to `main` or `staging`.
-- Never interpret an ordinary website-edit request as permission to publish it live.
-- Do not force-push or delete `main` or `staging`.
-- Do not alter the production custom domain, live DNS, indexing policy, or launch safeguards unless the user explicitly requests that specific operation.
-- Do not expose private client or clinical information anywhere in this public repository.
-- Keep changes mobile-friendly and verify narrow layouts before presenting staging as ready.
-- Do not use version numbers or version prefixes in commit messages, pull-request titles, branch names, tags, website copy or project documentation.
-- Prefer concise, descriptive commit and pull-request titles.
-
-## Deployment
-
-GitHub Pages is assembled from both `main` and `staging` only after validation succeeds. The self-hosted CI runner is at Hamblett; contributors do not need access to Darren's laptop.
+- Never commit or push directly to `main` or `staging`; use PRs.
+- Never edit the generated `inner-pathway-staging` repository as a website source.
+- Never treat a normal website edit as permission to publish live.
+- Never force-push, reset, or delete either source branch.
+- Do not change production DNS, custom domains, indexing, mail records, or launch safeguards without explicit instruction.
+- Never publish private client or clinical information in these public repositories.
+- Prefer concise descriptive commit messages, branches and PR titles; no version-number prefixes.
+- All CI runs on the Hamblett self-hosted GitHub Actions runner. Contributors do not need access to Darren's laptop.
